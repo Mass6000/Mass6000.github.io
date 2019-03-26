@@ -1,2 +1,10 @@
-html body {
+html, body {
   background-color: #DADFEA; }
+
+.containerCourse {
+  text-align: center;
+  margin: auto; }
+  .containerCourse .img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
