@@ -1,12 +1,12 @@
 // https://golf-courses-api.herokuapp.com/courses
-// Fox Hollow id: 18300
-// Thanksgiving Point id: 11819
-// Spanish Oaks id: 19002
+//   Fox Hollow id: 18300
+//   Thanksgiving Point id: 11819
+//   Spanish Oaks id: 19002
 
 // https://golf-courses-api.herokuapp.com/courses/${courseid}
 
 
-let selectedGolf;
+let selectedGolf; // todo move to local variable after testing
 
 function getGolf() {
     let allGolf;
@@ -60,17 +60,3 @@ function getGolfCourse(id) {
 
 
 getGolf();
-
-// getGolfCourse(11819); // Thanksgiving Point
-// getGolfCourse(19002); // Spanish Oaks
-// getGolfCourse(18300); // Fox Hollow
-
-
-/*console.log(allGolf);
-            for (let i = 0; i < allGolf.courses.length; i++) {
-                console.log('Am I getting here?');
-                $('.container').append(`<select id = "id${allGolf.courses[i].id}">Course Name: ${allGolf.courses[i].name}</select>`)
-            }
-        }
-
-        */
