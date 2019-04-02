@@ -1,5 +1,5 @@
 html, body {
-  background-color: #DADFEA; }
+  background-color: #FFFFFF; }
 
 .containerCourse {
   text-align: center;
@@ -8,3 +8,27 @@ html, body {
     display: block;
     margin-left: auto;
     margin-right: auto; }
+
+.containerCard {
+  display: none; }
+  .containerCard .players {
+    height: 25px; }
+
+.theCard {
+  display: flex; }
+
+.column {
+  border: 1px solid #DADFEA; }
+
+.cells {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #DADFEA;
+  height: 25px;
+  width: 35px; }
+
+.playersColumn {
+  border: 1px solid #DADFEA;
+  height: 25px;
+  width: 70px; }
