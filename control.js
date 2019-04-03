@@ -1,13 +1,15 @@
-// THIS SECTION GETS THE API DATA FROM THE SOURCE XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+let courseHoles = [];
 
+// THIS SECTION GETS THE API DATA FROM THE SOURCE XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//
 //     https://golf-courses-api.herokuapp.com/courses
 //       Fox Hollow id: 18300
 //       Thanksgiving Point id: 11819
 //       Spanish Oaks id: 19002
-
+//
 //     https://golf-courses-api.herokuapp.com/courses/${courseid}
-
-let courseHoles = [];
+//       This last URL contains all the information required for the selected course
+//
 
 function getGolfCourses() {
     let allGolfCourses;
@@ -23,16 +25,28 @@ function getGolfCourses() {
 }
 
 function drawGolfCourses(allGolfCourses) {
+    $('.containerCourse').append(`<h1>Course Selections Page</h1>`);
+    $('.containerCourse').append(`<h4>Choose a course from the dropdown</h4>`);
+    $('.containerCourse').append(`<select name="golfCourses" id="golfCourses"></select>`);
+    $('.containerCourse').append(`<noscript><input type="submit" value="Submit"></noscript>`);
+    $('.containerCourse').append(`<div id="courseImage"></div>`);
+    $('.containerCourse').append(`<button id="courseSubmit" type="button"></button>`); // This button is replace below
+    // as I could not figure out a way to keep it below the image without setting it here. XXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+
     for (let i = 0; i < allGolfCourses.courses.length; i++) {
         if (i === 0) {
             $('#golfCourses').append(`<option value="${allGolfCourses.courses[i].id}" id="${allGolfCourses.courses[i].id}">${allGolfCourses.courses[i].name}</option>`);
             $('#courseImage').append(`<img id="imageCourse" src="${allGolfCourses.courses[i].image}" alt="Image of the ${allGolfCourses.courses[i].name}">`);
-            $('#courseSubmit').replaceWith(`<button id="courseSubmit" onclick="getGolfCourse(${allGolfCourses.courses[i].id})">Submit</button>`)
+            $('#courseSubmit').replaceWith(`<button id="courseSubmit" onclick="getGolfCourse(${allGolfCourses.courses[i].id})">Complete your selection by pressing here</button>`)
         } else {
             $('#golfCourses').append(`<option value="${allGolfCourses.courses[i].id}" id="${allGolfCourses.courses[i].id}">${allGolfCourses.courses[i].name}</option>`);
         }
     }
-// This is where the individual course is selected
+
+    // This is where the individual course is selected XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     $('#golfCourses').change(function () {
         for (let i = 0; i < allGolfCourses.courses.length; i++) {
             if ($(this).val() == allGolfCourses.courses[i].id) {
@@ -76,10 +90,7 @@ function objHoleData(selGolfCourse) {
     }
 }
 
-getGolfCourses();
-
-
-// THIS SECTION SETS UP THE SCORECARD  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+// THIS SECTION DRAWS AND SETS UP THE SCORECARD  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 function drawCard() {
     let numColumns = 22,
@@ -117,4 +128,7 @@ function drawCard() {
 }
 
 
+
+
+getGolfCourses();
 // drawCard();
