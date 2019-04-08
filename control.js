@@ -1,5 +1,6 @@
 const courseHoles = [],
-    testPlayer = [];
+    testPlayer = [],
+    courseName = [];
 
 // THIS SECTION GETS THE API DATA FROM THE SOURCE XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //
@@ -59,6 +60,9 @@ function getGolfCourse(id) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             selGolfCourse = JSON.parse(this.responseText);
+            courseName.push(selGolfCourse.data.name);
+            courseName.push(selGolfCourse.data.addr1);
+            courseName.push(selGolfCourse.data.city);
             objHoleData(selGolfCourse);
             getPlayers();
             // todo insert modal function call here "select teebox"
@@ -95,8 +99,8 @@ function getPlayers() {
         tempNumPlay = 0;
     $('.containerCourse').empty();
     $('.playerSetup').append(`<h2>Players Here</h2>`);
-    for (let p = 0; p < 4; p++) {
-        $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" value="one" onkeydown="checkName(this.id, this.value, event)"></div>`);
+    for (let p = 0; p < (testPlayer.length + 1); p++) {
+        $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
     }
     // PUT SUBMIT HERE
 
@@ -106,28 +110,37 @@ function checkName(id, name, event) {
     switch (event.key) {
         case 'Tab':
             console.log(`I got tabbed the id is ${id} and the name is ${name}`);
-            testPlayer.push(name);
-            for (let i = 0; i < testPlayer.length - 1; i++) {
-                console.log(`name = ${name}    testPlayer[${i}] = ${testPlayer[i]}`);
-                if (name === testPlayer[i]) {
-                    // todo put modal here
-                    $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
-                    testPlayer.pop();
+            if (testPlayer.length === 0) {
+                testPlayer.push(name);
+                $('#player0').replaceWith(`<div id="player0">${testPlayer[0]}</div>`);
+                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
+                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+                }
+            } else {
+                testPlayer.push(name);
+                // todo test for repeat here
+                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
+                    console.log(`replace #player${p} with here`);
+                    $(`#player${p - 1}`).replaceWith(`<div id="player${p - 1}">${testPlayer[p - 1]}</div>`);
+                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
                 }
             }
             break;
         case 'Enter':
             console.log(`I got entered the id is ${id} and the name is ${name}`);
-            testPlayer.push(name);
-            $(`#player${id + 1}`).focus();
-            for (let i = 0; i < testPlayer.length - 1; i++) {
-                console.log(`name = ${name}    testPlayer[${i}] = ${testPlayer[i]}`);
-                if (name === testPlayer[i]) {
-                    // todo put modal here
-                    console.log(`I got here`);
-                    $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
-                    $(`#player${id}`).focus();
-                    testPlayer.pop();
+            if (testPlayer.length === 0) {
+                testPlayer.push(name);
+                $('#player0').replaceWith(`<div id="player0">${testPlayer[0]}</div>`);
+                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
+                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+                }
+            } else {
+                testPlayer.push(name);
+                // todo test for repeat here
+                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
+                    console.log(`replace #player${p} with here`);
+                    $(`#player${p - 1}`).replaceWith(`<div id="player${p - 1}">${testPlayer[p - 1]}</div>`);
+                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
                 }
             }
             break;
