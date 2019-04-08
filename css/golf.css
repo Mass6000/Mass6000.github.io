@@ -9,10 +9,11 @@ html, body {
     margin-left: auto;
     margin-right: auto; }
 
-.containerCard {
-  display: none; }
-  .containerCard .players {
-    height: 25px; }
+.playerSetup {
+  text-align: center; }
+
+.containerCard .players {
+  height: 25px; }
 
 .theCard {
   display: flex; }
