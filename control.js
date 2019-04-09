@@ -99,48 +99,50 @@ function getPlayers() {
         tempNumPlay = 0;
     $('.containerCourse').empty();
     $('.playerSetup').append(`<h2>Players Here</h2>`);
-    for (let p = 0; p < (testPlayer.length + 1); p++) {
-        $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
-    }
+    let p = 0;
+    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+
     // PUT SUBMIT HERE
 
 }
 
+// todo get this function to work
 function checkName(id, name, event) {
+    let dupTest = false;
     switch (event.key) {
         case 'Tab':
-            console.log(`I got tabbed the id is ${id} and the name is ${name}`);
-            if (testPlayer.length === 0) {
-                testPlayer.push(name);
-                $('#player0').replaceWith(`<div id="player0">${testPlayer[0]}</div>`);
-                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
-                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+            testPlayer.push(name);
+            for (let i = 0; i < id; i++) {
+                if (testPlayer[i] === name) {
+                    dupTest = true;
+                    testPlayer.pop();
+                    $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`)
                 }
-            } else {
-                testPlayer.push(name);
-                // todo test for repeat here
-                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
-                    console.log(`replace #player${p} with here`);
-                    $(`#player${p - 1}`).replaceWith(`<div id="player${p - 1}">${testPlayer[p - 1]}</div>`);
-                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+            }
+            if (!dupTest) {
+                $(`#player${id}`).replaceWith(`<div id="player${id}">${testPlayer[id]}</div>`);
+                if (id < 3) {
+                    $('.playerSetup').append(`<div id="player${Number(id) + 1}"><input type="text" id="${Number(id) + 1}" placeholder="Player ${Number(id) + 2}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+                } else {
+                    $(".playerSetup").append(`<div><button type="button">Submit</button></div>`)
                 }
             }
             break;
         case 'Enter':
-            console.log(`I got entered the id is ${id} and the name is ${name}`);
-            if (testPlayer.length === 0) {
-                testPlayer.push(name);
-                $('#player0').replaceWith(`<div id="player0">${testPlayer[0]}</div>`);
-                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
-                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+            testPlayer.push(name);
+            for (let i = 0; i < id; i++) {
+                if (testPlayer[i] === name) {
+                    dupTest = true;
+                    testPlayer.pop();
+                    $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`)
                 }
-            } else {
-                testPlayer.push(name);
-                // todo test for repeat here
-                for (let p = testPlayer.length; p < (testPlayer.length + 1); p++) {
-                    console.log(`replace #player${p} with here`);
-                    $(`#player${p - 1}`).replaceWith(`<div id="player${p - 1}">${testPlayer[p - 1]}</div>`);
-                    $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+            }
+            if (!dupTest) {
+                $(`#player${id}`).replaceWith(`<div id="player${id}">${testPlayer[id]}</div>`);
+                if (id < 3) {
+                    $('.playerSetup').append(`<div id="player${Number(id) + 1}"><input type="text" id="${Number(id) + 1}" placeholder="Player ${Number(id) + 2}" onkeydown="checkName(this.id, this.value, event)"></div>`);
+                } else {
+                    $(".playerSetup").append(`<div><button type="button">Submit</button></div>`)
                 }
             }
             break;

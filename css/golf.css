@@ -1,5 +1,6 @@
 html, body {
-  background-color: #FFFFFF; }
+  background-color: #FFFFFF;
+  font-family: 'Mukta', sans-serif; }
 
 .containerCourse {
   text-align: center;
