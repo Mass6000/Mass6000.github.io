@@ -114,6 +114,7 @@ function checkName(id, name, event) {
             testPlayer.push(name);
             for (let i = 0; i < id; i++) {
                 if (testPlayer[i] === name) {
+                    myModal('Please select another name', './there-can-be-only-one-quote-2.jpg', name);
                     dupTest = true;
                     testPlayer.pop();
                     $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`)
@@ -132,6 +133,7 @@ function checkName(id, name, event) {
             testPlayer.push(name);
             for (let i = 0; i < id; i++) {
                 if (testPlayer[i] === name) {
+                    myModal('Please select another name', './there-can-be-only-one-quote-2.jpg', name);
                     dupTest = true;
                     testPlayer.pop();
                     $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`)
@@ -154,6 +156,24 @@ function objPlayerData(players) {
 
     // console.log(`numPlayer ${numPlayer}, playerName ${playerName}, teeBox ${teeBox}`);
 
+
+}
+
+function myModal(theText, image, name) {
+    $('.modal').append(`<div class="inner"></div>`);
+    $('.inner').append(`<div class="popup">${theText}</div>`);
+    $('.popup').append(`<img src="${image}" width="200">`);
+    $('.popup').append(`<div>${name}</div>`);
+
+    $('.popup').append(`<div><button onclick="closeit()">Dismiss</button></div>`);
+    $('.playerSetup').hide();
+    $('.modal').fadeIn();
+}
+
+function closeit() {
+    $('.modal').hide();
+    $('.modal').empty();
+    $('.playerSetup').fadeIn();
 
 }
 
@@ -195,3 +215,4 @@ function drawCard() {
 }
 
 getGolfCourses();
+
