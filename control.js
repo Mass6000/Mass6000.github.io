@@ -111,8 +111,8 @@ function checkName(id, name, event) {
             testPlayer.push(name);
             for (let i = 0; i < id; i++) {
                 if (testPlayer[i] === name) {
-                    myModal('Please select another name', './there-can-be-only-one-quote-2.jpg', name);
-                    dupTest = true;
+                    myModal('Please select another name', './there-can-be-only-one-quote-2.jpg', name, 'playerSetup', 'submit');
+                    dupTest = true
                     testPlayer.pop();
                     $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`)
                 }
@@ -128,7 +128,7 @@ function checkName(id, name, event) {
             testPlayer.push(name);
             for (let i = 0; i < id; i++) {
                 if (testPlayer[i] === name) {
-                    myModal('Please select another name', './there-can-be-only-one-quote-2.jpg', name);
+                    myModal('Please select another name', './there-can-be-only-one-quote-2.jpg', name, 'playerSetup', 'submit');
                     dupTest = true;
                     testPlayer.pop();
                     $(`#player${id}`).replaceWith(`<div id="player${id}"><input type="text" id="${id}" placeholder="Player ${Number(id) + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`)
@@ -144,8 +144,8 @@ function checkName(id, name, event) {
     }
 }
 
-function teeChoice() { // todo add this below the scorecard before play begins or even allow them to change on the fly
-    if (testPlayer.length == 0) {
+function teeChoice() {
+    if (testPlayer.length === 0) {
         // TODO modal wouldn't you like to have some players?
     } else {
         $('.teeBoxContainer').append(`<br>`);
@@ -170,22 +170,33 @@ function objPlayerData() {
 
 }
 
-function myModal(theText, image, name) {
+function myModal(theText, image, name, ...theClass) {
+    let temp;
+    for (let i = 0; i < theClass.length; i++) {
+        if (i === 0) {
+            temp = `'${theClass[i]}'`
+        } else {
+            temp = temp + `, '${theClass[i]}'`
+        }
+    }
     $('.modal').append(`<div class="inner"></div>`);
     $('.inner').append(`<div class="popup">${theText}</div>`);
     $('.popup').append(`<img src="${image}" width="200">`);
     $('.popup').append(`<div>${name}</div>`);
 
-    $('.popup').append(`<div><button onclick="closeit()">Dismiss</button></div>`);
-    $('.playerSetup').hide();
+    $('.popup').append(`<div><button onclick="closeit(${temp})">Dismiss</button></div>`);
+    for (let i = 0; i < theClass.length; i++) {
+        $(`.${theClass[i]}`).hide();
+    }
     $('.modal').fadeIn();
 }
 
-function closeit() {
+function closeit(...theClass) {
     $('.modal').hide();
     $('.modal').empty();
-    $('.playerSetup').fadeIn();
-
+    for (i = 0; i < theClass.length; i++) {
+        $(`.${theClass[i]}`).fadeIn();
+    }
 }
 
 // THIS SECTION DRAWS AND SETS UP THE SCORECARD  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
