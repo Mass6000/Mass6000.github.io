@@ -15,3 +15,9 @@ class Holes {
     }
 }
 
+class Player {
+    constructor(golfer, teebox) {
+        this.golfer = golfer;
+        this.tee = teebox;
+    }
+}

@@ -1,6 +1,7 @@
 const courseHoles = [],
     testPlayer = [],
-    courseName = [];
+    courseName = [],
+    golfer = [];
 
 // THIS SECTION GETS THE API DATA FROM THE SOURCE XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 //
@@ -157,17 +158,16 @@ function teeChoice() {
         $('.submit').empty();
         $('.submit').append(`<button onclick="objPlayerData(value)">submit</button>`);
     }
+
 }
 
 function objPlayerData() {
     let teeNumber = $(`input:radio[name='tee']:checked`).val();
     for (let i = 0; i < testPlayer.length; i++) {
-        console.log(`Player ${i + 1}: ${testPlayer[i]} playing from the ${teeNumber}.`);
+        golfer.push(new Player(testPlayer[i], teeNumber));
     }
 
     // console.log(`numPlayer ${numPlayer}, playerName ${playerName}, teeBox ${teeBox}`);
-
-
 }
 
 function myModal(theText, image, name, ...theClass) {
