@@ -31,8 +31,7 @@ function drawGolfCourses(allGolfCourses) {
     $('.containerCourse').append(`<select name="golfCourses" id="golfCourses"></select>`);
     $('.containerCourse').append(`<noscript><input type="submit" value="Submit"></noscript>`);
     $('.containerCourse').append(`<div id="courseImage"></div>`);
-    $('.containerCourse').append(`<button id="courseSubmit" type="button"></button>`); // This button is replace below
-    // as I could not figure out a way to keep it below the image without setting it here. XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    $('.containerCourse').append(`<button id="courseSubmit" type="button"></button>`);
 
     for (let i = 0; i < allGolfCourses.courses.length; i++) {
         if (i === 0) {
@@ -98,15 +97,13 @@ function getPlayers() {
         tee = [],
         tempNumPlay = 0;
     $('.containerCourse').empty();
-    $('.playerSetup').append(`<h2>Players Here</h2>`);
+    $('.playerSetup').append(`<h2>Enter Players</h2>`);
     let p = 0;
     $('.playerSetup').append(`<div id="player${p}"><input type="text" id="${p}" placeholder="Player ${p + 1}" onkeydown="checkName(this.id, this.value, event)"></div>`);
-
-    // PUT SUBMIT HERE
+    $('.submit').append(`<button onclick="teeChoice()">submit</button>`);
 
 }
 
-// todo get this function to work
 function checkName(id, name, event) {
     let dupTest = false;
     switch (event.key) {
@@ -124,8 +121,6 @@ function checkName(id, name, event) {
                 $(`#player${id}`).replaceWith(`<div id="player${id}">${testPlayer[id]}</div>`);
                 if (id < 3) {
                     $('.playerSetup').append(`<div id="player${Number(id) + 1}"><input type="text" id="${Number(id) + 1}" placeholder="Player ${Number(id) + 2}" onkeydown="checkName(this.id, this.value, event)"></div>`);
-                } else {
-                    $(".playerSetup").append(`<div><button type="button">Submit</button></div>`)
                 }
             }
             break;
@@ -143,16 +138,32 @@ function checkName(id, name, event) {
                 $(`#player${id}`).replaceWith(`<div id="player${id}">${testPlayer[id]}</div>`);
                 if (id < 3) {
                     $('.playerSetup').append(`<div id="player${Number(id) + 1}"><input type="text" id="${Number(id) + 1}" placeholder="Player ${Number(id) + 2}" onkeydown="checkName(this.id, this.value, event)"></div>`);
-                } else {
-                    $(".playerSetup").append(`<div><button type="button">Submit</button></div>`)
                 }
             }
             break;
     }
 }
 
-function objPlayerData(players) {
+function teeChoice() { // todo add this below the scorecard before play begins or even allow them to change on the fly
+    if (testPlayer.length == 0) {
+        // TODO modal wouldn't you like to have some players?
+    } else {
+        $('.teeBoxContainer').append(`<br>`);
+        $('.teeBoxContainer').append(`<hr>`);
+        $('.teeBoxContainer').append(`<h3>Select Tee</h3>`);
+        for (let i = 0; i < courseHoles[0].teebox.length; i++) {
+            $('.teeBoxContainer').append(`<div><input type="radio" name="tee" value="${i}">${courseHoles[0].teebox[i].teeType}</input></div>`);
+        }
+        $('.submit').empty();
+        $('.submit').append(`<button onclick="objPlayerData(value)">submit</button>`);
+    }
+}
 
+function objPlayerData() {
+    let teeNumber = $(`input:radio[name='tee']:checked`).val();
+    for (let i = 0; i < testPlayer.length; i++) {
+        console.log(`Player ${i + 1}: ${testPlayer[i]} playing from the ${teeNumber}.`);
+    }
 
     // console.log(`numPlayer ${numPlayer}, playerName ${playerName}, teeBox ${teeBox}`);
 

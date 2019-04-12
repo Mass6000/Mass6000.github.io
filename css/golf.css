@@ -4,6 +4,9 @@ html, body {
   background-color: #FFFFFF;
   font-family: 'Mukta', sans-serif; }
 
+h3 {
+  text-align: center; }
+
 .containerCourse {
   text-align: center;
   margin: auto; }
@@ -36,6 +39,15 @@ html, body {
   border: 1px solid #DADFEA;
   height: 25px;
   width: 70px; }
+
+.teeBox {
+  display: flex;
+  justify-content: center; }
+  .teeBox .teeBoxContainer {
+    width: 170px; }
+
+.submit {
+  text-align: center; }
 
 .modal {
   display: none;
