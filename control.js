@@ -210,6 +210,9 @@ function drawCard() {
     $('.theCard').append(`<div class="column" id="totCard"></div>`);
 
     $('#labelCard').append(`<div class="cells0">Hole</div>`);
+    if (courseHoles[0].teebox[golfer[0].tee].teeType === 'auto change location') {
+        courseHoles[0].teebox[golfer[0].tee].teeType = 'auto chg loc';
+    }
     $('#labelCard').append(`<div class="cells0">${courseHoles[0].teebox[golfer[0].tee].teeType}</div>`);
     $('#labelCard').append(`<div class="cells0">Handicap</div>`);
     $('#labelCard').append(`<div class="cells0">Par</div>`);
@@ -224,7 +227,7 @@ function drawCard() {
         $('#col' + c).append(`<div class="cells" id="c${c}r2">${courseHoles[c].teebox[golfer[0].tee].hcp}</div>`);
         $('#col' + c).append(`<div class="cells" id="c${c}r3">${courseHoles[c].teebox[golfer[0].tee].par}</div>`);
         for (let r = 4; r < (golfer.length + 4); r++) {
-            $('#col' + c).append(`<div class="cells" id="c${c}r${r}" contenteditable="true"></div>`);
+            $('#col' + c).append(`<div class="cells" id="c${c}r${r}" onkeyup="totalScore(id)" contenteditable="true"></div>`);
         }
     }
 
@@ -240,7 +243,7 @@ function drawCard() {
     $('#outCard').append(`<div class="cells">${outY}</div>`);
     $('#outCard').append(`<div class="cells">${outH}</div>`);
     $('#outCard').append(`<div class="cells">${outP}</div>`);
-    for (let r = 4; r < 8; r++) {
+    for (let r = 4; r < (golfer.length + 4); r++) {
         $('#outCard').append(`<div class="cells" id=out${r}></div>`);
     }
 
@@ -252,7 +255,7 @@ function drawCard() {
         $('#col' + c).append(`<div class="cells" id="c${c}r2">${courseHoles[c].teebox[golfer[0].tee].hcp}</div>`);
         $('#col' + c).append(`<div class="cells" id="c${c}r3">${courseHoles[c].teebox[golfer[0].tee].par}</div>`);
         for (let r = 4; r < (golfer.length + 4); r++) {
-            $('#col' + c).append(`<div class="cells" id="c${c}r${r}" contenteditable="true"></div>`);
+            $('#col' + c).append(`<div class="cells" id="c${c}r${r}" onkeyup="totalScore(id)" contenteditable="true"></div>`);
         }
     }
     $('#inCard').append(`<div class="cells">IN</div>`);
@@ -267,7 +270,7 @@ function drawCard() {
     $('#inCard').append(`<div class="cells">${inY}</div>`);
     $('#inCard').append(`<div class="cells">${inH}</div>`);
     $('#inCard').append(`<div class="cells">${inP}</div>`);
-    for (let r = 4; r < 8; r++) {
+    for (let r = 4; r < (golfer.length + 4); r++) {
         $('#inCard').append(`<div class="cells" id=in${r}></div>`);
     }
 
@@ -278,8 +281,33 @@ function drawCard() {
     $('#totCard').append(`<div class="cells">${totY}</div>`);
     $('#totCard').append(`<div class="cells">${totH}</div>`);
     $('#totCard').append(`<div class="cells">${totP}</div>`);
-    for (let r = 4; r < 8; r++) {
+    for (let r = 4; r < (golfer.length + 4); r++) {
         $('#totCard').append(`<div class="cells" id=tot${r}></div>`);
+    }
+}
+
+function totalScore(location) {
+    let myTest = Number($(`#${location}`).html()),
+        theRow = 0,
+        myOut = 0,
+        myIn = 0,
+        myTot = 0;
+
+    if (Number.isInteger(myTest)) {
+        theRow = Number(location.slice((location.length - 1), (location.length)));
+        for (let c = 0; c < 9; c++) {
+            myOut += Number($(`#c${c}r${theRow}`).html());
+        }
+        for (let c = 9; c < 18; c++) {
+            myIn += Number($(`#c${c}r${theRow}`).html());
+        }
+        $(`#out${theRow}`).html(myOut);
+        $(`#in${theRow}`).html(myIn);
+        myTot = myOut + myIn;
+        $(`#tot${theRow}`).html(myTot);
+    } else {
+        console.log(`What are you trying to pull ${myTest} is not an integer!`);
+        $(`#${location}`).html('');
     }
 }
 
