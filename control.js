@@ -202,6 +202,11 @@ function drawCard() {
     $('.teeBoxContainer').empty();
     $('.teeBox').empty();
     $('.submit').empty();
+    $('.myCourse').append(`<h3>${courseName[0]}</h3>`);
+    $('.myCourse').append(`<div class="centerMe">${courseName[1]}</div>`);
+    $('.myCourse').append(`<div class="centerMe">${courseName[2]}</div>`);
+    $('.myCourse').append(`<br>`);
+    $('.myCourse').append(`<hr>`);
     $('.theCard').append(`<div class="column" id="labelCard"></div>`);
     $('.theCard').append(`<div class="column" id="firstCard"></div>`);
     $('.theCard').append(`<div class="column" id="outCard"></div>`);
@@ -280,7 +285,7 @@ function drawCard() {
         totP = outP + inP;
     $('#totCard').append(`<div class="cells">${totY}</div>`);
     $('#totCard').append(`<div class="cells">${totH}</div>`);
-    $('#totCard').append(`<div class="cells">${totP}</div>`);
+    $('#totCard').append(`<div class="cells" id="totP">${totP}</div>`);
     for (let r = 4; r < (golfer.length + 4); r++) {
         $('#totCard').append(`<div class="cells" id=tot${r}></div>`);
     }
@@ -291,7 +296,9 @@ function totalScore(location) {
         theRow = 0,
         myOut = 0,
         myIn = 0,
-        myTot = 0;
+        myTot = 0,
+        theEnd = 0,
+        theText;
 
     if (Number.isInteger(myTest)) {
         theRow = Number(location.slice((location.length - 1), (location.length)));
@@ -305,47 +312,27 @@ function totalScore(location) {
         $(`#in${theRow}`).html(myIn);
         myTot = myOut + myIn;
         $(`#tot${theRow}`).html(myTot);
+        if ((Number(location.slice(1, 3)) === 17) && (myTest > 0)) {
+            if (myTot > Number($('#totP').html())) {
+                theEnd = myTot - Number($('#totP').html());
+                theText = (theEnd + ' over par! Better luck next time');
+                myModal(theText, 'overpar.jpg', golfer[theRow - 4].golfer, 'containerCard')
+            } else if (myTot < Number($('#totP').html())) {
+                theEnd = Number($('#totP').html()) - myTot;
+                theText = (theEnd + ' under par! Are you a pro');
+                myModal(theText, 'underpar.jpg', golfer[theRow - 4].golfer, 'containerCard');
+            } else {
+                console.log('You are just Par')
+            }
+
+        }
     } else {
         console.log(`What are you trying to pull ${myTest} is not an integer!`);
         $(`#${location}`).html('');
     }
 }
 
-/*
-    let numColumns = 22,
-        playerNames = ['One', 'Two', 'Three', 'Four'];
-
-// Working grid here
-//Make columns
-    for (let c = 0; c < numColumns; c++) {
-        $('.theCard').append(`<div id="col${c}" class="column"></div>`);
-    }
-
-// Put blocks in the columns
-    for (let r = 0; r < 5; r++) {
-        for (let c = 0; c < numColumns; c++) {
-            $('#col' + c).append(`<div id="r${r}c${c}" class="cells"></div>`);
-        }
-    }
-
-// Put player label and holes numbers at the top of the columns
-    $('#r0c0').replaceWith(`<div id="r0c0" class="cells playersColumn">Players:</div>`);
-    for (let c = 1; c < 10; c++) {
-        $(`#r0c${c}`).html(`${c}`);
-    }
-    $('#r0c10').html('Out');
-    for (let c = 11; c < 20; c++) {
-        $(`#r0c${c}`).html(`${c - 1}`);
-    }
-    $('#r0c20').html('In');
-    $('#r0c21').html('Total');
-
-// Put players in the first column
-    for (r = 1; r < 6; r++) {
-        $(`#r${r}c0`).replaceWith(`<div id="r${r}c0" class="cells playersColumn">${playerNames[r - 1]}</div>`);
-    }
-}
- */
-
 getGolfCourses();
+
+
 

@@ -1,7 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: #FFFFFF;
+  background-color: #54FF5D;
   font-family: 'Mukta', sans-serif; }
 
 h3 {
@@ -16,6 +16,9 @@ h3 {
     margin-right: auto; }
 
 .playerSetup {
+  text-align: center; }
+
+.centerMe {
   text-align: center; }
 
 .containerCard {
@@ -36,18 +39,18 @@ h3 {
   overflow: scroll; }
 
 .column {
-  border: 1px solid #DADFEA; }
+  border: 1px solid #2A802D; }
 
 .columnTwo {
   display: flex;
   flex-direction: row;
-  border: 1px solid #DADFEA; }
+  border: 1px solid #2A802D; }
 
 .cells {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #DADFEA;
+  border: 1px solid #2A802D;
   height: 25px;
   width: 35px; }
 
@@ -55,12 +58,12 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #DADFEA;
+  border: 1px solid #2A802D;
   height: 25px;
   width: 100px; }
 
 .playersColumn {
-  border: 1px solid #DADFEA;
+  border: 1px solid #2A802D;
   height: 25px;
   width: 70px; }
 
