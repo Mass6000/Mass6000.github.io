@@ -18,13 +18,29 @@ h3 {
 .playerSetup {
   text-align: center; }
 
-.containerCard .players {
-  height: 25px; }
+.containerCard {
+  display: flex;
+  justify-content: center; }
+  .containerCard .players {
+    height: 25px; }
 
 .theCard {
   display: flex; }
 
+#firstCard {
+  display: flex;
+  overflow: scroll; }
+
+#secondCard {
+  display: flex;
+  overflow: scroll; }
+
 .column {
+  border: 1px solid #DADFEA; }
+
+.columnTwo {
+  display: flex;
+  flex-direction: row;
   border: 1px solid #DADFEA; }
 
 .cells {
@@ -34,6 +50,14 @@ h3 {
   border: 1px solid #DADFEA;
   height: 25px;
   width: 35px; }
+
+.cells0 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #DADFEA;
+  height: 25px;
+  width: 70px; }
 
 .playersColumn {
   border: 1px solid #DADFEA;

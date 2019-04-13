@@ -65,9 +65,6 @@ function getGolfCourse(id) {
             courseName.push(selGolfCourse.data.city);
             objHoleData(selGolfCourse);
             getPlayers();
-            // todo insert modal function call here "select teebox"
-            // todo turn off "Select Your Course" display
-            // todo draw course card function call drawCard(); courseHoles is globally defined so I don't need to pass it.
         }
     };
     xhttp.open("GET", `https://golf-courses-api.herokuapp.com/courses/${id}`, true);
@@ -156,9 +153,8 @@ function teeChoice() {
             $('.teeBoxContainer').append(`<div><input type="radio" name="tee" value="${i}">${courseHoles[0].teebox[i].teeType}</input></div>`);
         }
         $('.submit').empty();
-        $('.submit').append(`<button onclick="objPlayerData(value)">submit</button>`);
+        $('.submit').append(`<button onclick="objPlayerData(value);drawCard()">submit</button>`);
     }
-
 }
 
 function objPlayerData() {
@@ -166,8 +162,6 @@ function objPlayerData() {
     for (let i = 0; i < testPlayer.length; i++) {
         golfer.push(new Player(testPlayer[i], teeNumber));
     }
-
-    // console.log(`numPlayer ${numPlayer}, playerName ${playerName}, teeBox ${teeBox}`);
 }
 
 function myModal(theText, image, name, ...theClass) {
@@ -202,6 +196,94 @@ function closeit(...theClass) {
 // THIS SECTION DRAWS AND SETS UP THE SCORECARD  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 function drawCard() {
+    let numColumns = 9;
+
+    $('.playerSetup').empty();
+    $('.teeBoxContainer').empty();
+    $('.teeBox').empty();
+    $('.submit').empty();
+    $('.theCard').append(`<div class="column" id="labelCard"></div>`);
+    $('.theCard').append(`<div class="column" id="firstCard"></div>`);
+    $('.theCard').append(`<div class="column" id="outCard"></div>`);
+    $('.theCard').append(`<div class="column" id="secondCard"></div>`);
+    $('.theCard').append(`<div class="column" id="inCard"></div>`);
+    $('.theCard').append(`<div class="column" id="totCard"></div>`);
+
+    $('#labelCard').append(`<div class="cells0">Hole</div>`);
+    $('#labelCard').append(`<div class="cells0">${courseHoles[0].teebox[golfer[0].tee].teeType}</div>`);
+    $('#labelCard').append(`<div class="cells0">Handicap</div>`);
+    $('#labelCard').append(`<div class="cells0">Par</div>`);
+    for (let i = 0; i < golfer.length; i++) {
+        $('#labelCard').append(`<div class="cells0">${golfer[i].golfer}</div>`);
+    }
+
+    for (let c = 0; c < numColumns; c++) {
+        $('#firstCard').append(`<div id=col${c} class="column"></div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r0">${courseHoles[c].hole}</div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r1">${courseHoles[c].teebox[golfer[0].tee].yards}</div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r2">${courseHoles[c].teebox[golfer[0].tee].hcp}</div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r3">${courseHoles[c].teebox[golfer[0].tee].par}</div>`);
+        for (let r = 4; r < (golfer.length + 4); r++) {
+            $('#col' + c).append(`<div class="cells" id="c${c}r${r}" contenteditable="true"></div>`);
+        }
+    }
+
+    $('#outCard').append(`<div class="cells">OUT</div>`);
+    let outY = 0,
+        outH = 0,
+        outP = 0;
+    for (let c = 0; c < 9; c++) {
+        outY += courseHoles[c].teebox[golfer[0].tee].yards;
+        outH += courseHoles[c].teebox[golfer[0].tee].hcp;
+        outP += courseHoles[c].teebox[golfer[0].tee].par;
+    }
+    $('#outCard').append(`<div class="cells">${outY}</div>`);
+    $('#outCard').append(`<div class="cells">${outH}</div>`);
+    $('#outCard').append(`<div class="cells">${outP}</div>`);
+    for (let r = 4; r < 8; r++) {
+        $('#outCard').append(`<div class="cells" id=out${r}></div>`);
+    }
+
+    numColumns = 18;
+    for (let c = 9; c < numColumns; c++) {
+        $('#secondCard').append(`<div id=col${c} class="column"></div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r0">${courseHoles[c].hole}</div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r1">${courseHoles[c].teebox[golfer[0].tee].yards}</div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r2">${courseHoles[c].teebox[golfer[0].tee].hcp}</div>`);
+        $('#col' + c).append(`<div class="cells" id="c${c}r3">${courseHoles[c].teebox[golfer[0].tee].par}</div>`);
+        for (let r = 4; r < (golfer.length + 4); r++) {
+            $('#col' + c).append(`<div class="cells" id="c${c}r${r}" contenteditable="true"></div>`);
+        }
+    }
+    $('#inCard').append(`<div class="cells">IN</div>`);
+    let inY = 0,
+        inH = 0,
+        inP = 0;
+    for (let c = 9; c < 18; c++) {
+        inY += courseHoles[c].teebox[golfer[0].tee].yards;
+        inH += courseHoles[c].teebox[golfer[0].tee].hcp;
+        inP += courseHoles[c].teebox[golfer[0].tee].par;
+    }
+    $('#inCard').append(`<div class="cells">${inY}</div>`);
+    $('#inCard').append(`<div class="cells">${inH}</div>`);
+    $('#inCard').append(`<div class="cells">${inP}</div>`);
+    for (let r = 4; r < 8; r++) {
+        $('#inCard').append(`<div class="cells" id=in${r}></div>`);
+    }
+
+    $('#totCard').append(`<div class="cells">TOT</div>`);
+    let totY = outY + inY,
+        totH = outH + inH,
+        totP = outP + inP;
+    $('#totCard').append(`<div class="cells">${totY}</div>`);
+    $('#totCard').append(`<div class="cells">${totH}</div>`);
+    $('#totCard').append(`<div class="cells">${totP}</div>`);
+    for (let r = 4; r < 8; r++) {
+        $('#totCard').append(`<div class="cells" id=tot${r}></div>`);
+    }
+}
+
+/*
     let numColumns = 22,
         playerNames = ['One', 'Two', 'Three', 'Four'];
 
@@ -235,6 +317,7 @@ function drawCard() {
         $(`#r${r}c0`).replaceWith(`<div id="r${r}c0" class="cells playersColumn">${playerNames[r - 1]}</div>`);
     }
 }
+ */
 
 getGolfCourses();
 
